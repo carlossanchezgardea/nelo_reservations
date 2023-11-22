@@ -1,7 +1,5 @@
 package com.carlos.neloreservations.models.entities
 
-import com.carlos.neloreservations.models.enums.DietaryRestrictions
-import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import java.util.*
 
@@ -12,10 +10,6 @@ class DinerUser (
 
     val firstName: String,
     val lastName: String,
-
-
-    @Column(columnDefinition = "jsonb")
-    var dietaryRestrictions: MutableList<DietaryRestrictions>,
 
     createdAt: Date,
     updatedAt: Date?,

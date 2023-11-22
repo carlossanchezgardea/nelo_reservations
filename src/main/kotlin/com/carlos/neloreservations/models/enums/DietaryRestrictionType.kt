@@ -1,6 +1,6 @@
 package com.carlos.neloreservations.models.enums
 
-enum class DietaryRestrictions {
+enum class DietaryRestrictionType {
     VEGAN,
     VEGETARIAN,
     GLUTENFREE,

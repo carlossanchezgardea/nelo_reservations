@@ -6,6 +6,7 @@ import jakarta.persistence.Id
 import jakarta.persistence.MappedSuperclass
 import jakarta.persistence.PreUpdate
 import org.hibernate.annotations.CreationTimestamp
+import org.hibernate.annotations.UpdateTimestamp
 import java.util.*
 
 @MappedSuperclass
@@ -15,9 +16,10 @@ abstract class BaseEntity (
     val uuid: String = UUID.randomUUID().toString(),
 
     @CreationTimestamp
-    @Column(updatable = false)
+    @Column(nullable = false, updatable = false)
     val createdAt: Date = Date(),
 
+    @UpdateTimestamp
     var updatedAt: Date? = null,
 ){
     @PreUpdate
