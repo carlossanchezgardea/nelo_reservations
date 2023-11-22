@@ -36,6 +36,8 @@ dependencies {
     implementation("org.hibernate.validator:hibernate-validator:6.1.7.Final")
     implementation("jakarta.validation:jakarta.validation-api:2.0.2")
 
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
+
     testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
     testImplementation ("org.junit.jupiter:junit-jupiter-api:5.8.2")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
