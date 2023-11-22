@@ -11,6 +11,7 @@ import java.util.*
 
 @MappedSuperclass
 abstract class BaseEntity (
+
     @Id
     @Column(nullable = false, columnDefinition = CHAR_36)
     val uuid: String = UUID.randomUUID().toString(),
