@@ -13,5 +13,6 @@ enum class DietaryRestrictionType {
     PALEO,
     PESCATARIAN,
     LOWFAT,
-    DIABETIC
+    DIABETIC,
+    CARLOS
 }

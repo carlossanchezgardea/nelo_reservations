@@ -6,21 +6,18 @@ import jakarta.persistence.ManyToOne
 import java.util.*
 
 @Entity
-class UserReservation(
+class RestaurantTable (
 
     uuid: String = UUID.randomUUID().toString(),
-
-    @ManyToOne
-    @JoinColumn(name = "diner_user_uuid")
-    val DinerUser: DinerUser,
-
-    @ManyToOne
-    @JoinColumn(name = "reservation_uuid")
-    val reservation: Reservation,
+    val capacity: Int,
 
     createdAt: Date,
     updatedAt: Date? = null,
 
-): BaseEntity(uuid=uuid, createdAt = createdAt, updatedAt = updatedAt) {
+    @ManyToOne
+    @JoinColumn(name = "restaurant_uuid")
+    val restaurant: Restaurant,
+
+    ): BaseEntity(uuid=uuid, createdAt=createdAt, updatedAt=updatedAt){
 
 }

@@ -10,11 +10,11 @@ import java.util.*
 @Entity
 class Restaurant(
 
-    uuid: String,
+    uuid: String = UUID.randomUUID().toString(),
     val name: String,
 
     createdAt: Date,
-    updatedAt: Date?,
+    updatedAt: Date? = null,
 
     @Serializable
     @JdbcTypeCode(SqlTypes.JSON)

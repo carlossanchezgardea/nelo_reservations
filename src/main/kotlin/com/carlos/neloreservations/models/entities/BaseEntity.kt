@@ -6,7 +6,6 @@ import jakarta.persistence.Id
 import jakarta.persistence.MappedSuperclass
 import jakarta.persistence.PreUpdate
 import org.hibernate.annotations.CreationTimestamp
-import org.hibernate.annotations.UpdateTimestamp
 import java.util.*
 
 @MappedSuperclass
@@ -20,7 +19,6 @@ abstract class BaseEntity (
     @Column(nullable = false, updatable = false)
     val createdAt: Date = Date(),
 
-    @UpdateTimestamp
     var updatedAt: Date? = null,
 ){
     @PreUpdate
