@@ -2,8 +2,11 @@ package com.carlos.neloreservations.services
 
 import com.carlos.neloreservations.lib.Utils.DateConverter
 import com.carlos.neloreservations.models.entities.Reservation
+import com.carlos.neloreservations.models.entities.UserReservation
+import com.carlos.neloreservations.repositories.DinerRepository
 import com.carlos.neloreservations.repositories.ReservationRepository
 import com.carlos.neloreservations.repositories.RestaurantTableRepository
+import com.carlos.neloreservations.repositories.UserReservationRepository
 import org.springframework.stereotype.Service
 import java.text.SimpleDateFormat
 import java.util.*
@@ -11,7 +14,9 @@ import java.util.*
 @Service
 class ReservationService(
     private val reservationRepository: ReservationRepository,
-    private val restaurantTableRepository: RestaurantTableRepository
+    private val restaurantTableRepository: RestaurantTableRepository,
+    private val dinerRepository: DinerRepository,
+    private val userReservationRepository: UserReservationRepository
 ) {
 
     private val dateConverter = DateConverter()
@@ -54,7 +59,7 @@ class ReservationService(
     }
 
     // make a reservation
-    fun makeReservation(startTime: Date, restaurantUuid: String): Reservation{
+    fun makeReservation(startTime: Date, restaurantUuid: String, dinnerUsers: List<String>): Reservation{
 
         val resEndTime = getEndTime(startTime)
 
@@ -71,7 +76,19 @@ class ReservationService(
             createdAt = Date()
         )
 
-        return reservationRepository.save(reservation)
+        val confirmedReservation: Reservation = reservationRepository.save(reservation)
+
+        for(diner in dinnerUsers){
+            val dinerUser = dinerRepository.findById(diner)
+            val userReservation = UserReservation(
+                uuid = UUID.randomUUID().toString(),
+                dinerUser = dinerUser.get(),
+                reservation = confirmedReservation,
+                createdAt = Date()
+            )
+            userReservationRepository.save(userReservation)
+        }
+        return confirmedReservation
     }
 
 

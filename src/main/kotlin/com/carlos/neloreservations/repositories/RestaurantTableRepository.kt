@@ -14,24 +14,6 @@ interface RestaurantTableRepository : CrudRepository<RestaurantTable, String> {
     fun findTableUuidsByRestaurant(@Param("restaurantUuid") restaurantUuid: String): List<String>
 
 
-//    @Query(
-//        value = """
-//    SELECT rt.uuid AS restaurant_table_uuid
-//    FROM reservation rs
-//             LEFT JOIN restaurant_table rt ON rt.uuid = rs.restaurant_table_uuid
-//    WHERE rt.restaurant_uuid = :restaurantUuid
-//      AND rs.deleted_at IS NULL
-//      AND ((rs.start_time <= CAST(:startTime AS timestamp) AND rs.end_time > CAST(:startTime AS timestamp))
-//        OR (rs.end_time >= CAST(:endTime AS timestamp) AND rs.start_time < CAST(:endTime AS timestamp)))
-//    """,
-//        nativeQuery = true
-//    )
-//    fun findOverlappingReservations(
-//        @Param("restaurantUuid") restaurantUuid: String,
-//        @Param("startTime") startTime: String,
-//        @Param("endTime") endTime: String
-//    ): List<String>
-
     @Query(
         value = """
     SELECT rt.uuid AS restaurant_table_uuid
@@ -49,7 +31,6 @@ interface RestaurantTableRepository : CrudRepository<RestaurantTable, String> {
         @Param("startTime") startTime: String,
         @Param("endTime") endTime: String
     ): List<String>
-
 
 }
 

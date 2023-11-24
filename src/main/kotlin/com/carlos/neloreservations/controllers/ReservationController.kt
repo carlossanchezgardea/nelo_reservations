@@ -46,8 +46,9 @@ class ReservationController(private val reservationService: ReservationService) 
         val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm")
         val resStartTime = formatter.parse(reservationRequest.startTime)
         val restaurantUuid = reservationRequest.restaurantUuid
+        val dinerUsers = reservationRequest.dinerUsers
 
-        val reservation = reservationService.makeReservation(resStartTime, restaurantUuid)
+        val reservation = reservationService.makeReservation(resStartTime, restaurantUuid, dinerUsers)
 
         return ResponseEntity.ok(reservation)
     }

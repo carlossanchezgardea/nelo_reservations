@@ -12,7 +12,7 @@ class UserReservation(
 
     @ManyToOne
     @JoinColumn(name = "diner_user_uuid")
-    val DinerUser: DinerUser,
+    val dinerUser: DinerUser,
 
     @ManyToOne
     @JoinColumn(name = "reservation_uuid")
