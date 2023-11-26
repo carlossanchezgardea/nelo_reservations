@@ -32,5 +32,23 @@ interface RestaurantTableRepository : CrudRepository<RestaurantTable, String> {
         @Param("endTime") endTime: String
     ): List<String>
 
+    @Query(
+        value = """
+    select 
+    rt.uuid as restaurant_table_uuid,
+    restaurant_uuid
+
+    from restaurant_table rt
+    where restaurant_uuid in(:restaurantUuids) 
+            """,
+        nativeQuery = true
+
+    )
+    fun finAllRestaurantTables(
+        @Param("restaurantUuids") restaurantUuids: List<String>
+    ): List<String>
+
+
+
 }
 

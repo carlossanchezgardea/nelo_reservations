@@ -8,6 +8,7 @@ import com.carlos.neloreservations.repositories.ReservationRepository
 import com.carlos.neloreservations.repositories.RestaurantTableRepository
 import com.carlos.neloreservations.repositories.UserReservationRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -59,6 +60,7 @@ class ReservationService(
     }
 
     // make a reservation
+    @Transactional
     fun makeReservation(startTime: Date, restaurantUuid: String, dinnerUsers: List<String>): Reservation{
 
         val resEndTime = getEndTime(startTime)
@@ -90,6 +92,4 @@ class ReservationService(
         }
         return confirmedReservation
     }
-
-
 }
