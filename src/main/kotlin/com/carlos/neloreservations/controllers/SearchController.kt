@@ -24,13 +24,13 @@ class SearchController(private val searchService: SearchService) {
     @GetMapping("/search")
     fun search(
         @RequestParam("uuids") uuids: List<String>,
-        @RequestParam("date") date: String,
-    ): ResponseEntity<List<Restaurant>> {
+        @RequestParam("date") startTime: String,
+    ): ResponseEntity<MutableSet<Restaurant>> {
 
         val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm")
-        val resStartTime = formatter.parse(date)
+        val resStartTime = formatter.parse(startTime)
 
-        val testResponse = searchService.matchRestaurantEndorsements(uuids)
+        val testResponse = searchService.matchRestaurantEndorsements(uuids, startTime)
 
         return ResponseEntity.ok().body(testResponse)
 

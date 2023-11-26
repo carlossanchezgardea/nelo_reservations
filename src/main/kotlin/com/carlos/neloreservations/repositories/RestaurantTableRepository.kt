@@ -35,8 +35,7 @@ interface RestaurantTableRepository : CrudRepository<RestaurantTable, String> {
     @Query(
         value = """
     select 
-    rt.uuid as restaurant_table_uuid,
-    restaurant_uuid
+    rt.uuid as restaurant_table_uuid
 
     from restaurant_table rt
     where restaurant_uuid in(:restaurantUuids) 
@@ -46,6 +45,24 @@ interface RestaurantTableRepository : CrudRepository<RestaurantTable, String> {
     )
     fun finAllRestaurantTables(
         @Param("restaurantUuids") restaurantUuids: List<String>
+    ): List<String>
+
+    @Query(
+        value = """
+    SELECT distinct rt.uuid AS restaurant_table_uuid
+    FROM reservation rs
+     LEFT JOIN restaurant_table rt ON rt.uuid = rs.restaurant_table_uuid
+    WHERE rt.restaurant_uuid IN (:restaurantUuids)
+    AND rs.deleted_at IS NULL
+    AND (CAST(:startTime AS timestamp) BETWEEN rs.start_time AND rs.end_time
+        OR CAST(:endTime AS timestamp) BETWEEN rs.start_time AND rs.end_time)
+        """,
+        nativeQuery = true
+    )
+    fun findAllBookedTables(
+        @Param("restaurantUuids") restaurantUuids: List<String>,
+        @Param("startTime") startTime: String,
+        @Param("endTime") endTime: String
     ): List<String>
 
 
