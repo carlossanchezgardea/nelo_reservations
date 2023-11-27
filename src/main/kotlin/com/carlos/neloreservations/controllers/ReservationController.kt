@@ -5,10 +5,7 @@ import com.carlos.neloreservations.models.entities.Reservation
 import com.carlos.neloreservations.models.json.ReservationRequest
 import com.carlos.neloreservations.services.ReservationService
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.text.SimpleDateFormat
 
 
@@ -51,6 +48,12 @@ class ReservationController(private val reservationService: ReservationService) 
         val reservation = reservationService.makeReservation(resStartTime, restaurantUuid, dinerUsers)
 
         return ResponseEntity.ok(reservation)
+    }
+
+    @DeleteMapping("/reservation/{userUuid}/{reservationUuid}")
+    fun deleteReservation(@PathVariable userUuid: String, @PathVariable reservationUuid: String): ResponseEntity<String> {
+        reservationService.cancelReservation(userUuid, reservationUuid)
+        return ResponseEntity.ok("Reservation deleted")
     }
 
 }

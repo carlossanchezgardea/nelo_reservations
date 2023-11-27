@@ -15,11 +15,6 @@ import java.text.SimpleDateFormat
 class SearchController(private val searchService: SearchService) {
     private val dateConverter = DateConverter()
 
-    //    @GetMapping("/search")
-//    fun search(@RequestParam("uuids") uuids: List<String>): ResponseEntity<ArrayList<Restaurant>> {
-//        val testResponse = searchService.matchRestaurantEndorsements(uuids)
-//        return ResponseEntity.ok().body(testResponse)
-//    }
 
     @GetMapping("/search")
     fun search(
@@ -30,7 +25,7 @@ class SearchController(private val searchService: SearchService) {
         val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm")
         val resStartTime = formatter.parse(startTime)
 
-        val testResponse = searchService.matchRestaurantEndorsements(uuids, startTime)
+        val testResponse = searchService.matchRestaurantEndorsementsAndAvailableTimes(uuids, startTime)
 
         return ResponseEntity.ok().body(testResponse)
 

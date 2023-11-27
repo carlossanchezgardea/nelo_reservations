@@ -17,7 +17,7 @@ class Reservation(
     val startTime: Date,
     val endTime: Date,
 
-    val deletedAt: Date? = null,
+    var deletedAt: Date? = null,
 
 
 

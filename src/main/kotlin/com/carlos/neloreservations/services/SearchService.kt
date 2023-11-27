@@ -33,7 +33,7 @@ class SearchService(
     }
 
     // find restaurants that match user group dietary restrictions
-    fun matchRestaurantEndorsements(users: List<String>, resStartTime: String): MutableSet<Restaurant> {
+    fun matchRestaurantEndorsementsAndAvailableTimes(users: List<String>, resStartTime: String): MutableSet<Restaurant> {
         val userRestrictions = getUserRestrictions(users) // get a set of the user groups restrictions
         val restaurants = ArrayList<Restaurant>() // create an empty arraylist of restaurants
         val allRestaurants = restaurantService.findAll() // get all restaurants from the database
@@ -48,11 +48,7 @@ class SearchService(
 
         val availableTables = allTables.filterNot { tableUuid -> allBookedTables.contains(tableUuid) }
 
-        println("THESE ARE AVAILABLE TABLES: ${availableTables}")
-
         val recommendedRestaurants = restaurantRepository.getAvailableRestaurants(availableTables)
-
-        println("THIS SHOULD HAVE RESULTS: ${recommendedRestaurants}")
 
         val allAvailableRestaurants = mutableSetOf<Restaurant>()
 

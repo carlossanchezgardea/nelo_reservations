@@ -52,7 +52,8 @@ class ReservationService(
         val resStartTime = formatter.format(startTime)
         val endTime = getEndTime(startTime)
         val resEndTime = endFormatter.format(endTime)
-        val reservedTable = restaurantTableRepository.findOverlappingReservations(restaurantUuid, resStartTime, resEndTime)
+        val reservedTable =
+            restaurantTableRepository.findOverlappingReservations(restaurantUuid, resStartTime, resEndTime)
         val availableTables = listOfTables.filterNot { it in reservedTable }
 
         return availableTables[0]
@@ -61,12 +62,12 @@ class ReservationService(
 
     // make a reservation
     @Transactional
-    fun makeReservation(startTime: Date, restaurantUuid: String, dinnerUsers: List<String>): Reservation{
+    fun makeReservation(startTime: Date, restaurantUuid: String, dinnerUsers: List<String>): Reservation {
 
         val resEndTime = getEndTime(startTime)
 
 
-        val availableTable = getAvailableTable(startTime,  restaurantUuid)
+        val availableTable = getAvailableTable(startTime, restaurantUuid)
 
         val table = restaurantTableRepository.findById(availableTable!!)
 
@@ -80,7 +81,7 @@ class ReservationService(
 
         val confirmedReservation: Reservation = reservationRepository.save(reservation)
 
-        for(diner in dinnerUsers){
+        for (diner in dinnerUsers) {
             val dinerUser = dinerRepository.findById(diner)
             val userReservation = UserReservation(
                 uuid = UUID.randomUUID().toString(),
@@ -91,5 +92,24 @@ class ReservationService(
             userReservationRepository.save(userReservation)
         }
         return confirmedReservation
+    }
+
+
+    fun cancelReservation(userUuid: String, reservationUuid: String): Unit {
+
+        val userReservation = userReservationRepository.checkUserToReservation(userUuid, reservationUuid)
+        println("userReservation: $userReservation")
+
+        if(!userReservation){
+            throw Exception("User is not part of this reservation")
+        }
+
+        var reservationToCancel = reservationRepository.findById(reservationUuid).get()
+
+        reservationToCancel.deletedAt = Date()
+
+        reservationRepository.save(reservationToCancel)
+
+
     }
 }
